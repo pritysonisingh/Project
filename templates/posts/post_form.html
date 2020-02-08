@@ -1,0 +1,21 @@
+{% extends 'account/base.html' %}
+
+{% load bootstrap4 %}
+{% block post_content %}
+
+{% if user.is_authenticated %}
+<h4>Create a new Post.!</h4>
+<form id="postForm" action="{% url 'posts:post_list' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.errors }}
+    <!-- {% bootstrap_form form %} -->
+    {{ form.as_p }}
+    <input type="submit" value="Save" class="btn btn-primary btn-large">
+</form>
+{% else %}
+        <a href="{% url 'login' %}?next={{ request.path }}">Login to Post.!</a>
+{% endif %}
+
+{% endblock %}
+
+

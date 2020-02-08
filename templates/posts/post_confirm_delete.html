@@ -1,0 +1,10 @@
+{% extends 'account/base.html' %}
+{% block content %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Confirm Delete? {{ object }}</p>
+    <input type="submit" class="btn btn-danger" value="Yes">
+</form>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'account/base.html' %}
+{% block content %}
+
+<div class="container">
+    <h3>Your Post.!</h3>
+    <p>User: {{ user }}</p>
+    {% if post.image %}
+    <img src="{{ post.image.url }}" width="240">
+    {% endif %}
+    <p>{{ post.post_date }}</p>
+    <p>{{ post.caption }}</p>
+    <!-- <p>{{ post.likes }}</p>  -->
+</div>
+{% endblock %}
