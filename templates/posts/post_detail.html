@@ -9,6 +9,11 @@
     {% endif %}
     <p>{{ post.post_date }}</p>
     <p>{{ post.caption }}</p>
-    <!-- <p>{{ post.likes }}</p>  -->
+    <form action="{% url 'posts:post_list' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Like</button>
+    </form>
+  
 </div>
 {% endblock %}

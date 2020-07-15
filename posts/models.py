@@ -9,7 +9,7 @@ class Post(models.Model):
     caption = models.CharField(max_length=200)
     image = models.ImageField(upload_to='post_image', height_field=None, width_field=None, max_length=100, default="Sorry")
     # people = models.CharField(max_length=300, default="None")
-    likes = models.IntegerField(default=0)
+    # likes = models.IntegerField(default=0)
     post_date = models.DateField(auto_now=False, auto_now_add= False, default =timezone.now)
 
     def __str__(self):

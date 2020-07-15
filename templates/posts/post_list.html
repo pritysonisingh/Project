@@ -5,7 +5,12 @@
   <ul>
     {% for post in post_list %}
       <li>
-        <a href="{{ post.get_absolute_url }}">{{ post.image }}</a> ({{ post.caption }})
+        <!-- <a href="{{ post.get_absolute_url }}">{{ post.image }}</a> ({{ post.caption }}) -->
+        {% if post.image %}
+        <img src="{{ post.image.url }}" width="240">
+        {% endif %}
+        <p>{{ post.post_date }}</p>
+        <p>{{ post.caption }}</p>
       </li>
     {% endfor %}
   </ul>
