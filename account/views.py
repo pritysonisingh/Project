@@ -1,9 +1,13 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from .forms import SignUpForm,EditProfileForm
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.views.generic import TemplateView
+from django.utils.decorators import method_decorator
+
+from .forms import SignUpForm,EditProfileForm
+from account.models import Profile,Friend
 # from django.contrib.auth.forms import UserCreationForm
 from . import models
 
@@ -22,8 +26,18 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html',{'form':form})
 
-def index(request):
-    return render(request, 'account/index.html')
+# def index(request):
+#     return render(request, 'account/index.html')
+class IndexView(TemplateView):
+    @method_decorator(login_required)
+
+    def get(self,request):
+        users = User.objects.exclude(id=request.user.id)
+        # friend = get_object_or_404(Friend,current_user=request.user)
+        friend = Friend.objects.get(current_user=request.user)
+        friends = friend.users.all()
+        args = {'users':users, 'friends':friends}
+        return render(request, 'account/index.html',args)
 
 @login_required
 def view_profile(request):
@@ -59,3 +73,12 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
         args = {'form':form}
         return render(request,'registration/change_password.html',args)
+
+
+def add_friend(request,operation,pk):
+    friend = User.objects.get(pk=pk)
+    if operation == 'add':
+        Friend.make_friend(request.user,friend)
+    elif operation == 'remove':
+        Friend.lose_friend(request.user,friend)
+    return redirect('account:index')
