@@ -19,7 +19,7 @@
         <li>
           <!-- <a href="{{ post.get_absolute_url }}">{{ post.image }}</a> ({{ post.caption }}) -->
           {% if post.image %}
-          <img src="{{ post.image.url }}" width="240">
+          <img src="{{ user.post.image.url }}" width="240">
           {% endif %}
           <p>{{ post.post_date }}</p>
           <p>{{ post.caption }}</p>
@@ -27,7 +27,7 @@
       {% endfor %}
     </ul>
     {% else %}
-      <p>No Posts :(</p>
+    <p>No Posts :)</a></p>
     {% endif %}       
 </div>
 {% endblock %}

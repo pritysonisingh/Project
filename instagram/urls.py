@@ -24,8 +24,5 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('posts/',include('posts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('rocketchat/', include('rocketchat_auth.urls')),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
-# [url(r'^rocketchat/', include('rocketchat_auth.urls'))]
 
-# urlpatterns += [url(r'^rocketchat/', include('rocketchat_auth.urls'))]

@@ -33,25 +33,31 @@ class IndexView(TemplateView):
 
     def get(self,request):
         users = User.objects.exclude(id=request.user.id)
-        # friend = get_object_or_404(Friend,current_user=request.user)
-        friend = Friend.objects.get(current_user=request.user)
-        friends = friend.users.all()
+        friends_list = Friend.objects.filter(current_user=request.user)
+        if friends_list:
+            for friend in friends_list:
+                friends = friend.users.all()
+                print(friend.users.all())
+        else:
+            friends = Friend.objects.filter(current_user=request.user)
         args = {'users':users, 'friends':friends}
         return render(request, 'account/index.html',args)
+       
+
 
 @login_required
-def view_profile(request):
-    # if pk:
-    #     user = User.objects.get(pk=pk)
-    # else:
-    user = request.user
+def view_profile(request,pk=None):
+    if pk:
+        user = User.objects.get(pk=pk)
+    else:
+        user = request.user
     args= {'user': user}
     return render(request, 'account/profile.html',args)
 
 @login_required
 def edit_profile(request):
     if request.user == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
 
         if form.is_valid():
             form.save
@@ -75,7 +81,7 @@ def change_password(request):
         return render(request,'registration/change_password.html',args)
 
 
-def add_friend(request,operation,pk):
+def change_friends(request,operation,pk):
     friend = User.objects.get(pk=pk)
     if operation == 'add':
         Friend.make_friend(request.user,friend)

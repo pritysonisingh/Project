@@ -14,7 +14,8 @@ def post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
-            form.save()
+            post.save()
+            # form.save()
             return redirect('posts:post_list')
     else:
         form = PostForm()

@@ -7,6 +7,7 @@ from django.contrib.auth.forms import (
 from django.contrib.auth.models import User
 from .models import Profile
 
+
 class SignUpForm(UserCreationForm):
     dob = forms.DateField(help_text="Required format: DD/MM/YYYY")
     class Meta:
@@ -17,6 +18,7 @@ class SignUpForm(UserCreationForm):
             'password1',
             'password2', 
             'email',
+            # 'image'
         )
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
@@ -42,4 +44,5 @@ class EditProfileForm(UserChangeForm):
             'first_name',
             'last_name',
             'email',
+            # 'image',
         )
